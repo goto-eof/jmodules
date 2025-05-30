@@ -107,15 +107,13 @@ public class JModulesController implements JModuleObserver {
         final CommandExecutorServiceImpl commandExecutorService = new CommandExecutorServiceImpl();
 
         List<Callable<Void>> callables = new ArrayList<>();
-        int i = 0;
+
         for (String item : jarFilenameList) {
-            final int ii = i;
             Callable<Void> callable = () -> {
-                processItem(javaVersion, item, commandExecutorService, ii);
+                processItem(javaVersion, item, commandExecutorService);
                 return null;
             };
             callables.add(callable);
-            i++;
         }
 
         try {
@@ -131,7 +129,7 @@ public class JModulesController implements JModuleObserver {
         });
     }
 
-    private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService, int i) {
+    private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService) {
         Set<String> fullModuleInfo = commandExecutorService.executeJDepsCommand(javaVersion, item);
         LOGGER.debug("{}", fullModuleInfo);
         status.addAllFullModuleInfo(fullModuleInfo);
