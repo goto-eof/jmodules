@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.jdi.VoidValue;
 import gui.JModuleGUI;
 import helper.ValidationUtil;
 import lombok.SneakyThrows;
@@ -20,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -197,6 +195,7 @@ public class JModulesController implements JModuleObserver {
     public void shutdown() {
         try {
             executor.shutdownNow();
+            multithreadedExecutor.shutdown();
             LOGGER.debug("shutdown completed");
         } catch (Exception e) {
             LOGGER.error("{}", e);
