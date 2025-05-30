@@ -158,6 +158,10 @@ public class JModuleGUI extends JFrame {
         progressBar.setValue(i);
     }
 
+    public int getProgressBarCurrent() {
+        return progressBar.getValue();
+    }
+
     public void updateFullModuleInfo(List<String> detailedModuleList) {
         DefaultListModel<String> detailedModuleModel = new DefaultListModel<>();
         detailedModuleList.forEach(detailedModuleModel::addElement);
@@ -292,4 +296,7 @@ public class JModuleGUI extends JFrame {
     }
 
 
+    public void incrementProgressBarCurrent() {
+        this.progressBar.setValue(progressBar.getValue() + 1);
+    }
 }

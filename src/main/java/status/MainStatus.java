@@ -2,14 +2,18 @@ package status;
 
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class MainStatus {
     @Getter
     private final List<String> jarList = new ArrayList<>();
-    private List<String> detailedList = new ArrayList<>();
-    private List<String> syntheticList = new ArrayList<>();
+    private Queue<String> detailedList = new ConcurrentLinkedQueue<>();
+    private Queue<String> syntheticList = new ConcurrentLinkedQueue<>();
 
     public MainStatus() {
     }
@@ -30,7 +34,6 @@ public class MainStatus {
 
     public synchronized void addAllFullModuleInfo(Set<String> fullModuleInfo) {
         detailedList.addAll(fullModuleInfo.stream().distinct().toList());
-        detailedList = new ArrayList<>(detailedList.stream().distinct().sorted().toList());
     }
 
     public synchronized void addModule(Set<String> fullModule) {
@@ -39,14 +42,13 @@ public class MainStatus {
                 .filter(item -> !"not found".equalsIgnoreCase(item))
                 .filter(item -> !"JDK removed internal API".equals(item))
                 .collect(Collectors.toSet()));
-        syntheticList = new ArrayList<>(syntheticList.stream().distinct().sorted().collect(Collectors.toList()));
     }
 
-    public List<String> getFullModuleInfoSet() {
+    public Queue<String> getFullModuleInfoSet() {
         return detailedList;
     }
 
-    public List<String> getFullModuleSet() {
+    public Queue<String> getFullModuleSet() {
         return syntheticList;
     }
 

@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.jdi.VoidValue;
 import gui.JModuleGUI;
 import helper.ValidationUtil;
 import lombok.SneakyThrows;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 public class JModulesController implements JModuleObserver {
     private final static Logger LOGGER = LoggerFactory.getLogger(JModulesController.class);
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService multithreadedExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private MainStatus status;
     private JModuleGUI gui;
@@ -101,26 +105,45 @@ public class JModulesController implements JModuleObserver {
         SwingUtilities.invokeLater(() -> gui.setProgressBarMax(jarFilenameList.size()));
         SwingUtilities.invokeLater(() -> gui.setProgressBarCurrent(0));
 
+
         final CommandExecutorServiceImpl commandExecutorService = new CommandExecutorServiceImpl();
 
+        List<Callable<Void>> callables = new ArrayList<>();
         int i = 0;
         for (String item : jarFilenameList) {
-            Set<String> fullModuleInfo = commandExecutorService.executeJDepsCommand(javaVersion, item);
-            LOGGER.debug("{}", fullModuleInfo);
-            status.addAllFullModuleInfo(fullModuleInfo);
-            status.addModule(parseModules(fullModuleInfo));
-            final int ii = ++i;
-
-            SwingUtilities.invokeLater(() -> {
-                gui.setProgressBarCurrent(ii);
-                gui.updateFullModuleInfo(status.getFullModuleInfoSet());
-                gui.updateModuleInfo(status.getFullModuleSet());
-            });
-
+            final int ii = i;
+            Callable<Void> callable = () -> {
+                processItem(javaVersion, item, commandExecutorService, ii);
+                return null;
+            };
+            callables.add(callable);
+            i++;
         }
+
+        try {
+            multithreadedExecutor.invokeAll(callables);
+        } catch (InterruptedException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+
         SwingUtilities.invokeLater(() -> {
             gui.setFinalResult("jpackage --add-modules " + String.join(",", status.getFullModuleSet()));
             gui.showDoneMessage();
+        });
+    }
+
+    private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService, int i) {
+        Set<String> fullModuleInfo = commandExecutorService.executeJDepsCommand(javaVersion, item);
+        LOGGER.debug("{}", fullModuleInfo);
+        status.addAllFullModuleInfo(fullModuleInfo);
+        status.addModule(parseModules(fullModuleInfo));
+
+
+        SwingUtilities.invokeLater(() -> {
+            gui.incrementProgressBarCurrent();
+            gui.updateFullModuleInfo(status.getFullModuleInfoSet().stream().distinct().sorted().toList());
+            gui.updateModuleInfo(status.getFullModuleSet().stream().distinct().sorted().toList());
         });
     }
 
@@ -130,20 +153,10 @@ public class JModulesController implements JModuleObserver {
         return modules.stream().map(item -> item.split("->")[1].trim()).collect(Collectors.toSet());
     }
 
-    @Override
-    public void copyModulesToClipboard() {
-        copyToClipboard(status.getFullModuleSet());
-    }
-
     private void copyToClipboard(List<String> list) {
         StringSelection stringSelection = new StringSelection(String.join(",", list));
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
-    }
-
-    @Override
-    public void copyFullModulesInfoToClipboard() {
-        copyToClipboard(status.getFullModuleInfoSet());
     }
 
     @Override

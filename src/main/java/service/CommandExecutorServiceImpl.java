@@ -32,6 +32,8 @@ public class CommandExecutorServiceImpl {
             process.waitFor();
             System.out.println("Exiting process: " + process.exitValue());
             System.out.println("Result: " + list);
+            reader.close();
+            process.destroy();
             return list;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

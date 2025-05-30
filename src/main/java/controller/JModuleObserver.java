@@ -15,10 +15,6 @@ public interface JModuleObserver {
 
     Set<String> parseModules(Set<String> modules);
 
-    void copyModulesToClipboard();
-
-    void copyFullModulesInfoToClipboard();
-
     List<String> loadPomJars(String absolutePath);
 
     void processPomJars(UiRecord build);
