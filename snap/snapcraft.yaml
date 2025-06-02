@@ -7,7 +7,7 @@ grade: stable
 confinement: strict
 base: core24
 icon: snap/gui/icon.png
-title: JustFocus
+title: JModules
 website: https://andre-i.eu
 issues: https://github.com/goto-eof
 compression: xz

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-exec $SNAP/custom-jre/bin/java \
+exec $SNAP/bin/java \
     -jar $SNAP/jar/jmodules.jar "$@"
