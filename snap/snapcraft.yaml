@@ -7,12 +7,12 @@ grade: stable
 confinement: strict
 base: core24
 icon: snap/gui/icon.png
-title: JModules
+title: jmodules
 website: https://andre-i.eu
 issues: https://github.com/goto-eof
 compression: xz
 apps:
-  justfocus:
+  jmodules:
     command: executor
     extensions: [ gnome ]
     plugs:
