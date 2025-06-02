@@ -2,7 +2,7 @@
 Name=JModules
 Comment=HElps to reduce size of Java distributed bundles.
 Exec=jmodules
-Icon=${SNAP}/meta/com.andreidodu.jmodules.gui/icon.png
+Icon=${SNAP}/meta/gui/icon.png
 Terminal=false
 Type=Application
 StartupNotify=true
