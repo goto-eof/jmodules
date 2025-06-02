@@ -6,7 +6,7 @@ description: |
 grade: stable
 confinement: strict
 base: core24
-icon: snap/com.andreidodu.jmodules.gui/icon.png
+icon: snap/gui/icon.png
 title: JustFocus
 website: https://andre-i.eu
 issues: https://github.com/goto-eof
