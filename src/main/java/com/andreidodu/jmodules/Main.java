@@ -1,4 +1,6 @@
-import controller.JModulesController;
+package com.andreidodu.jmodules;
+
+import com.andreidodu.jmodules.controller.JModulesController;
 
 public class Main {
 

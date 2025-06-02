@@ -1,4 +1,4 @@
-package record;
+package com.andreidodu.jmodules.record;
 
 import lombok.Builder;
 

@@ -1,4 +1,4 @@
-package service;
+package com.andreidodu.jmodules.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CommandExecutorServiceImpl {
     public static final String JDEPS_COMMAND = "jdeps";
@@ -42,7 +41,7 @@ public class CommandExecutorServiceImpl {
     }
 
     public String executeMavenCopyLibraries(String absolutePath) throws IOException {
-        String exportPath = System.getProperty("java.io.tmpdir") + File.separator + "jdeps-gui" + File.separator + "lib";
+        String exportPath = System.getProperty("java.io.tmpdir") + File.separator + "jdeps-com.andreidodu.jmodules.gui" + File.separator + "lib";
         Files.createDirectories(Path.of(exportPath));
         File[] files = new File(exportPath).listFiles();
         if (files != null) {

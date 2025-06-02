@@ -1,13 +1,13 @@
-package gui;
+package com.andreidodu.jmodules.gui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import controller.JModuleObserver;
-import helper.GuiHelper;
+import com.andreidodu.jmodules.controller.JModuleObserver;
+import com.andreidodu.jmodules.helper.GuiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import record.UiRecord;
+import com.andreidodu.jmodules.record.UiRecord;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

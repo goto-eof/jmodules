@@ -1,9 +1,9 @@
 # JModules: A Java Module Info Extractor for JPackage Preparation
 
-JModules is a lightweight Swing-based desktop application designed to **simplify the process of extracting module
-information** from Java applications. By identifying precisely which Java modules are required, it helps developers
-create optimized `jpackage` distributions, thereby **reducing the final package size** for more efficient deployment. It
-processes modules from individual JARs, entire directories of JARs, or Maven `pom.xml` files.
+JModules' core operational logic lies in its orchestration of the jdeps command-line tool. It intelligently processes
+your JARs or Maven pom.xml files, executes jdeps behind the scenes, and then efficiently parses and consolidates its
+output to identify the exact Java modules required for your application. This enables precise package optimization,
+reducing the size of your distributed bundles.
 
 ---
 

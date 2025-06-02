@@ -1,4 +1,4 @@
-package helper;
+package com.andreidodu.jmodules.helper;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

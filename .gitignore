@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+jmodules_*.*.*_amd64.snap
 ### Eclipse ###
 .apt_generated
 .classpath

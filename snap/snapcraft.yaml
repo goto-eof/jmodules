@@ -1,0 +1,46 @@
+name: jmodules
+version: '1.0.0'
+summary: A Java distribution bundle optimization helper.
+description: |
+  A Java package optimization that helps to reduce the size of your distributed bundles.
+grade: stable
+confinement: strict
+base: core24
+icon: snap/com.andreidodu.jmodules.gui/icon.png
+title: JustFocus
+website: https://andre-i.eu
+issues: https://github.com/goto-eof
+compression: xz
+apps:
+  justfocus:
+    command: executor
+    extensions: [ gnome ]
+    plugs:
+      - network
+      - network-bind
+      - desktop
+      - wayland
+platforms:
+  amd64:
+    build-on: [ amd64 ]
+    build-for: [ amd64 ]
+  arm64:
+    build-on: [ arm64 ]
+    build-for: [ arm64 ]
+parts:
+  wrapper:
+    plugin: dump
+    source: snap/local
+    source-type: local
+  application:
+    plugin: maven
+    source: .
+    build-packages:
+      - openjdk-21-jdk
+      - maven
+    stage-packages:
+      - openjdk-21-jre
+      - glib-networking
+    override-prime: |
+      snapcraftctl prime
+      rm -vf usr/lib/jvm/java-11-openjdk-*64/lib/security/blacklisted.certs

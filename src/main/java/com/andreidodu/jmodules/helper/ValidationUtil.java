@@ -1,6 +1,6 @@
-package helper;
+package com.andreidodu.jmodules.helper;
 
-import exception.InvalidJavaVersionException;
+import com.andreidodu.jmodules.exception.InvalidJavaVersionException;
 
 public class ValidationUtil {
 

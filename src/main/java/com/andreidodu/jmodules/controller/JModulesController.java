@@ -1,13 +1,13 @@
-package controller;
+package com.andreidodu.jmodules.controller;
 
-import gui.JModuleGUI;
-import helper.ValidationUtil;
+import com.andreidodu.jmodules.gui.JModuleGUI;
+import com.andreidodu.jmodules.helper.ValidationUtil;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import record.UiRecord;
-import service.CommandExecutorServiceImpl;
-import status.MainStatus;
+import com.andreidodu.jmodules.record.UiRecord;
+import com.andreidodu.jmodules.service.CommandExecutorServiceImpl;
+import com.andreidodu.jmodules.status.MainStatus;
 
 import javax.swing.*;
 import java.awt.*;

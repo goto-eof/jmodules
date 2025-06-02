@@ -1,6 +1,6 @@
-package controller;
+package com.andreidodu.jmodules.controller;
 
-import record.UiRecord;
+import com.andreidodu.jmodules.record.UiRecord;
 
 import java.util.List;
 import java.util.Set;

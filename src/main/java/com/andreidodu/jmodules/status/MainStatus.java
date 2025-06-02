@@ -1,4 +1,4 @@
-package status;
+package com.andreidodu.jmodules.status;
 
 import lombok.Getter;
 
