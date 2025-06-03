@@ -43,6 +43,7 @@ parts:
       - maven
     stage-packages:
       - openjdk-21-jdk
+      - maven
       - glib-networking
     override-prime: |
       snapcraftctl prime
