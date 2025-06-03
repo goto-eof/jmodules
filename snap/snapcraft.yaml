@@ -19,6 +19,7 @@ apps:
       - network
       - network-bind
       - desktop
+      - home
       - wayland
 platforms:
   amd64:
