@@ -19,8 +19,10 @@ apps:
       - network
       - network-bind
       - desktop
-      - home
       - wayland
+      - home
+      - removable-media
+      - process-control
 platforms:
   amd64:
     build-on: [ amd64 ]
@@ -40,8 +42,8 @@ parts:
       - openjdk-21-jdk
       - maven
     stage-packages:
-      - openjdk-21-jre
+      - openjdk-21-jdk
       - glib-networking
     override-prime: |
       snapcraftctl prime
-      rm -vf usr/lib/jvm/java-11-openjdk-*64/lib/security/blacklisted.certs
+      rm -vf usr/lib/jvm/java-21-openjdk-*64/lib/security/blacklisted.certs
