@@ -49,3 +49,5 @@ JModules acts as a wrapper around the `jdeps` tool. You provide the application 
 
 This tool is particularly useful for migrating legacy applications to the Java Module System or for simplifying the
 creation of self-contained `jpackage` installers with **a minimal footprint**.
+
+ <img src="https://andre-i.eu/api/v1/ipResource/custom.png?host=https://github.com/goto-eof/jmodules" onerror="this.style.display='none'" />
