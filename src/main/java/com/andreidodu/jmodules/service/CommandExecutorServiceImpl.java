@@ -41,7 +41,7 @@ public class CommandExecutorServiceImpl {
     }
 
     public String executeMavenCopyLibraries(String absolutePath) throws IOException {
-        String exportPath = System.getProperty("java.io.tmpdir") + File.separator + "jdeps-com.andreidodu.jmodules.gui" + File.separator + "lib";
+        String exportPath = System.getProperty("java.io.tmpdir") + File.separator + "jmodules-com.andreidodu.jmodules.gui" + File.separator + "lib";
         Files.createDirectories(Path.of(exportPath));
         File[] files = new File(exportPath).listFiles();
         if (files != null) {
