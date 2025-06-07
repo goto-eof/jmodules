@@ -1,3 +1,4 @@
 #!/bin/bash
 export PATH="$SNAP/usr/share/maven/bin:$PATH"
+export PATH="$SNAP/usr/lib/jvm/java-21-openjdk-amd64/bin:$PATH"
 exec $SNAP/bin/java -jar $SNAP/jar/jmodules.jar "$@"
