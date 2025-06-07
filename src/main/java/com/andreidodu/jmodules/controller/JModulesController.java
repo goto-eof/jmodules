@@ -162,7 +162,7 @@ public class JModulesController implements JModuleObserver {
             String directory = commandExecutorService.executeMavenCopyLibraries(absolutePath);
             return loadDirectoryCommon(directory);
         } catch (Exception e) {
-            LOGGER.error("{}", e);
+            LOGGER.error("{}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
