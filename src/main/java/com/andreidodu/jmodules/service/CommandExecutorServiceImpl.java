@@ -30,6 +30,17 @@ public class CommandExecutorServiceImpl {
             }
             process.waitFor();
             System.out.println("Exiting process: " + process.exitValue());
+            System.out.println();
+
+
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            List<String> listError = new ArrayList<>();
+            String lineError;
+            while ((lineError = errorReader.readLine()) != null) {
+                listError.add(line);
+            }
+            System.err.println("Error: " + String.join(" ", listError));
+
             System.out.println("Result: " + list);
             reader.close();
             process.destroy();
