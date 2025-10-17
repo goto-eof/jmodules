@@ -45,7 +45,9 @@
                     <children>
                       <scrollpane id="50718">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="5" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="5" anchor="0" fill="3" indent="1" use-parent-layout="false">
+                            <preferred-size width="310" height="150"/>
+                          </grid>
                         </constraints>
                         <properties/>
                         <border type="none"/>
@@ -159,7 +161,9 @@
                         <children>
                           <scrollpane id="cb3d4">
                             <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                <preferred-size width="210" height="150"/>
+                              </grid>
                             </constraints>
                             <properties/>
                             <border type="none"/>
@@ -190,7 +194,9 @@
                             <children>
                               <scrollpane id="60aa1">
                                 <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="1" use-parent-layout="false">
+                                    <preferred-size width="210" height="150"/>
+                                  </grid>
                                 </constraints>
                                 <properties/>
                                 <border type="none"/>
