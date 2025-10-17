@@ -305,4 +305,17 @@ public class JModuleGUI extends JFrame {
     public void incrementProgressBarCurrent() {
         this.progressBar.setValue(progressBar.getValue() + 1);
     }
+
+
+    public JButton getSubmitFileButton() {
+        return submitFileButton;
+    }
+
+    public JButton getSubmitDirectoryButton() {
+        return submitDirectoryButton;
+    }
+
+    public JButton getSubmitPomButton() {
+        return submitPomButton;
+    }
 }

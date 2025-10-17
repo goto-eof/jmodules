@@ -99,6 +99,7 @@ public class JModulesController implements JModuleObserver {
 
 
     private void process(String javaVersion, List<String> jarFilenameList) {
+        enableButtons(false);
 
         SwingUtilities.invokeLater(() -> gui.setProgressBarMax(jarFilenameList.size()));
         SwingUtilities.invokeLater(() -> gui.setProgressBarCurrent(0));
@@ -121,12 +122,20 @@ public class JModulesController implements JModuleObserver {
         } catch (InterruptedException e) {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
+        } finally {
+            enableButtons(true);
         }
 
         SwingUtilities.invokeLater(() -> {
             gui.setFinalResult("jpackage --add-modules " + new HashSet<>(status.getFullModuleSet()).stream().sorted().collect(Collectors.joining(",")));
             gui.showDoneMessage();
         });
+    }
+
+    private void enableButtons(boolean enable) {
+        gui.getSubmitPomButton().setEnabled(enable);
+        gui.getSubmitFileButton().setEnabled(enable);
+        gui.getSubmitDirectoryButton().setEnabled(enable);
     }
 
     private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService) {
@@ -178,7 +187,7 @@ public class JModulesController implements JModuleObserver {
 
     private static void showPleaseWaitWarningMessage() {
         SwingUtilities.invokeLater(() -> {
-            JOptionPane.showMessageDialog(null,"It takes a while to download dependencies. Please wait.","Warning",  JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "It takes a while to generate the local repo by downloading all dependencies. Please wait.", "Warning", JOptionPane.WARNING_MESSAGE);
         });
     }
 
