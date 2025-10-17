@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -121,15 +122,15 @@ public class JModulesController implements JModuleObserver {
         }
 
         try {
-            multithreadedExecutor.invokeAll(callables);
+            List<Future<Void>> futures = multithreadedExecutor.invokeAll(callables);
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         } finally {
             SwingUtilities.invokeLater(() -> enableButtons(true));
             gui.getStatusLabel().setText("Waiting for user input");
-
         }
+
         SwingUtilities.invokeLater(() -> {
             gui.setFinalResult("jpackage --add-modules " + new HashSet<>(status.getFullModuleSet()).stream().sorted().collect(Collectors.joining(",")));
             gui.showDoneMessage();
@@ -178,7 +179,7 @@ public class JModulesController implements JModuleObserver {
             return loadDirectoryCommon(directory);
         } catch (Exception e) {
             log.error("{}", e.getMessage());
-            throw new RuntimeException(e);
+            return List.of();
         }
     }
 

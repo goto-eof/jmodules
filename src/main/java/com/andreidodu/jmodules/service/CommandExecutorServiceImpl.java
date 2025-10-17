@@ -1,5 +1,7 @@
 package com.andreidodu.jmodules.service;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -106,6 +108,9 @@ public class CommandExecutorServiceImpl {
         String workingDirectory = System.getProperty("user.home") + File.separator + "com.andreidodu.jmodules" + File.separator;
         String exportPath = workingDirectory + "lib";
         String downloadPath = workingDirectory + "download";
+
+        FileUtils.deleteDirectory(new File(exportPath));
+        FileUtils.deleteDirectory(new File(downloadPath));
 
         Files.createDirectories(Path.of(exportPath));
         Files.createDirectories(Path.of(downloadPath));

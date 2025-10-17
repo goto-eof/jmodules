@@ -14,7 +14,7 @@ public class GuiHelper {
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().toLowerCase().equals("pom.xml") || f.isDirectory();
+                return f.getName().toLowerCase().endsWith(".xml") || f.isDirectory();
             }
 
             @Override
