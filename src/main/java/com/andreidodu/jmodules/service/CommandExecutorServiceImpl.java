@@ -42,7 +42,7 @@ public class CommandExecutorServiceImpl {
     private String getJDepsExecutable() {
         String jdepsCommand = "jdeps";
         if (isLinux() || isMac()) {
-            jdepsCommand = getBinPath(LINUX_JDEPS_COMMAND);
+            jdepsCommand = getBinPathIfIsSnapOrDefault(LINUX_JDEPS_COMMAND);
         } else if (isWindows()) {
             jdepsCommand = WINDOWS_JDEPS_COMMAND;
         }
@@ -85,7 +85,7 @@ public class CommandExecutorServiceImpl {
         return List.of();
     }
 
-    private String getBinPath(String binPath) {
+    private String getBinPathIfIsSnapOrDefault(String binPath) {
         if (System.getenv("SNAP") != null) {
             return String.format("%s/%s", System.getenv("SNAP"), binPath);
         }
@@ -95,7 +95,7 @@ public class CommandExecutorServiceImpl {
     private String getMVNExecutable() {
         String jdepsCommand = "mvn";
         if (isLinux() || isMac()) {
-            jdepsCommand = getBinPath(LINUX_MVN_COMMAND);
+            jdepsCommand = getBinPathIfIsSnapOrDefault(LINUX_MVN_COMMAND);
         } else if (isWindows()) {
             jdepsCommand = WINDOWS_MVN_COMMAND;
         }
