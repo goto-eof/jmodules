@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class CommandExecutorServiceImpl {
-    public static final String JDEPS_COMMAND = "jdeps";
+    public static final String JDEPS_COMMAND = "/usr/lib/jvm/java-21-openjdk-amd64/bin/jdeps";
     public static final String JDEPS_COMMAND_MULTIRELEASE = "--multi-release";
     public static final String JDEPTS_COMMAND_OPTION = "-s";
 
@@ -60,7 +60,7 @@ public class CommandExecutorServiceImpl {
                 file.delete();
             }
         }
-        this.execute("mvn", "dependency:copy-dependencies", "-f", absolutePath, "-DoutputDirectory=" + exportPath);
+        this.execute("/usr/share/maven/bin/mvn", "dependency:copy-dependencies", "-f", absolutePath, "-DoutputDirectory=" + exportPath);
         return exportPath;
     }
 }

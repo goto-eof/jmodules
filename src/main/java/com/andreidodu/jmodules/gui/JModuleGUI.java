@@ -136,6 +136,12 @@ public class JModuleGUI extends JFrame {
         JMenu fileMenu = new JMenu("File");
 
         JMenuItem openItem = new JMenuItem("About");
+        openItem.addActionListener(e -> {
+           SwingUtilities.invokeLater(() -> {
+               JOptionPane.showMessageDialog(null, "JModules v.1.0.0, by Andrei Dodu");
+
+           });
+        });
         JMenuItem exitItem = new JMenuItem("Exit");
 
         exitItem.addActionListener(e -> System.exit(0));
