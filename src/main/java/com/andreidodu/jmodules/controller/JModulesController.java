@@ -187,7 +187,7 @@ public class JModulesController implements JModuleObserver {
         status.clearAllData();
         SwingUtilities.invokeLater(() -> {
             enableButtons(false);
-            gui.getStatusLabel().setText("Loading jar files. Please wait...");
+            gui.getStatusLabel().setText("Loading jar files. It will take few minutes (download in progress). Please wait...");
         });
         showPleaseWaitWarningMessage();
         processJars(build, this::loadPomJars);

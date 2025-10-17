@@ -37,7 +37,7 @@ public class JModuleGUI extends JFrame {
     public JModuleGUI(JModuleObserver observer) {
         this.observer = observer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("JModules");
+        setTitle("JModules 1.0.0");
         setContentPane(mainPanel);
 
         addMenu();
