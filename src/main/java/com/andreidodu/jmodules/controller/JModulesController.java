@@ -2,22 +2,20 @@ package com.andreidodu.jmodules.controller;
 
 import com.andreidodu.jmodules.gui.JModuleGUI;
 import com.andreidodu.jmodules.helper.ValidationUtil;
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.andreidodu.jmodules.record.UiRecord;
 import com.andreidodu.jmodules.service.CommandExecutorServiceImpl;
 import com.andreidodu.jmodules.status.MainStatus;
+import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +39,9 @@ public class JModulesController implements JModuleObserver {
     public List<String> loadFileName(String singleFilename) {
         status.clearAllData();
         this.status.addFilename(singleFilename);
-        return status.getJarList().stream().map(item -> new File(item).getName()).collect(Collectors.toList());
+        return status.getJarList().stream()
+                .map(item -> new File(item).getName())
+                .collect(Collectors.toList());
     }
 
 
@@ -124,7 +124,7 @@ public class JModulesController implements JModuleObserver {
         }
 
         SwingUtilities.invokeLater(() -> {
-            gui.setFinalResult("jpackage --add-modules " + String.join(",", status.getFullModuleSet()));
+            gui.setFinalResult("jpackage --add-modules " + new HashSet<>(status.getFullModuleSet()).stream().sorted().collect(Collectors.joining(",")));
             gui.showDoneMessage();
         });
     }
@@ -172,13 +172,21 @@ public class JModulesController implements JModuleObserver {
     public void processPomJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
+        showPleaseWaitWarningMessage();
         processJars(build, this::loadPomJars);
+    }
+
+    private static void showPleaseWaitWarningMessage() {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(null,"It takes a while to download dependencies. Please wait.","Warning",  JOptionPane.WARNING_MESSAGE);
+        });
     }
 
     @Override
     public void processDirectoryJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
+        showPleaseWaitWarningMessage();
         processJars(build, this::loadDirectory);
     }
 
@@ -186,6 +194,7 @@ public class JModulesController implements JModuleObserver {
     public void processFileJar(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
+        showPleaseWaitWarningMessage();
         processJars(build, this::loadFileName);
     }
 

@@ -38,7 +38,6 @@ public class MainStatus {
 
     public synchronized void addModule(Set<String> fullModule) {
         syntheticList.addAll(fullModule.stream()
-                .distinct()
                 .filter(item -> !"not found".equalsIgnoreCase(item))
                 .filter(item -> !"JDK removed internal API".equals(item))
                 .collect(Collectors.toSet()));

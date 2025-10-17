@@ -103,15 +103,20 @@ public class CommandExecutorServiceImpl {
     }
 
     public String executeMavenCopyLibraries(String absolutePath) throws IOException {
-        String exportPath = System.getProperty("user.home") + File.separator + "com.andreidodu.jmodules" + File.separator + "lib";
+        String workingDirectory = System.getProperty("user.home") + File.separator + "com.andreidodu.jmodules" + File.separator;
+        String exportPath = workingDirectory + "lib";
+        String downloadPath = workingDirectory + "download";
+
         Files.createDirectories(Path.of(exportPath));
+        Files.createDirectories(Path.of(downloadPath));
+
         File[] files = new File(exportPath).listFiles();
         if (files != null) {
             for (File file : files) {
                 file.delete();
             }
         }
-        this.execute(getMVNExecutable(), "dependency:copy-dependencies", "-f", absolutePath, "-DoutputDirectory=" + exportPath);
+        this.execute(getMVNExecutable(), "dependency:copy-dependencies", "-Dmaven.repo.local=" + downloadPath, "-f", absolutePath, "-DoutputDirectory=" + exportPath);
         return exportPath;
     }
 }
