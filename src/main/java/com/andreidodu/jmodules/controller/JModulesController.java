@@ -101,7 +101,6 @@ public class JModulesController implements JModuleObserver {
     private void process(String javaVersion, List<String> jarFilenameList) {
 
 
-        SwingUtilities.invokeLater(() -> enableButtons(false));
         SwingUtilities.invokeLater(() -> gui.setProgressBarMax(jarFilenameList.size()));
         SwingUtilities.invokeLater(() -> gui.setProgressBarCurrent(0));
 
@@ -182,6 +181,7 @@ public class JModulesController implements JModuleObserver {
     public void processPomJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
+        SwingUtilities.invokeLater(() -> enableButtons(false));
         showPleaseWaitWarningMessage();
         processJars(build, this::loadPomJars);
     }
