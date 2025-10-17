@@ -89,7 +89,7 @@ public class JModulesController implements JModuleObserver {
             try {
                 List<String> jarList = engine.apply(uiRecord.absolutePath());
                 SwingUtilities.invokeLater(() -> gui.rebuildJarJList(jarList));
-                process(uiRecord.javaVersion(), this.status.getJarList());
+                processOnMultipleThreads(uiRecord.javaVersion(), this.status.getJarList());
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
                 throw new RuntimeException(e);
@@ -98,7 +98,7 @@ public class JModulesController implements JModuleObserver {
     }
 
 
-    private void process(String javaVersion, List<String> jarFilenameList) {
+    private void processOnMultipleThreads(String javaVersion, List<String> jarFilenameList) {
 
 
         SwingUtilities.invokeLater(() -> gui.setProgressBarMax(jarFilenameList.size()));
@@ -123,7 +123,7 @@ public class JModulesController implements JModuleObserver {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
         } finally {
-            SwingUtilities.invokeLater(() -> enableButtons(false));
+            SwingUtilities.invokeLater(() -> enableButtons(true));
         }
 
         SwingUtilities.invokeLater(() -> {
@@ -211,8 +211,8 @@ public class JModulesController implements JModuleObserver {
     @Override
     public void shutdown() {
         try {
+            multithreadedExecutor.shutdownNow();
             executor.shutdownNow();
-            multithreadedExecutor.shutdown();
             LOGGER.debug("shutdown completed");
         } catch (Exception e) {
             LOGGER.error("{}", e);

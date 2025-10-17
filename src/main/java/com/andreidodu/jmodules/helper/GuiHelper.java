@@ -14,7 +14,7 @@ public class GuiHelper {
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().equals("pom.xml") || f.isDirectory();
+                return f.getName().toLowerCase().equals("pom.xml") || f.isDirectory();
             }
 
             @Override
@@ -34,12 +34,12 @@ public class GuiHelper {
 
     public static String getFile(JFrame frame) {
         JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().endsWith(".jar") || f.isDirectory();
+                return f.getName().toLowerCase().endsWith(".jar") || f.isDirectory();
             }
 
             @Override
