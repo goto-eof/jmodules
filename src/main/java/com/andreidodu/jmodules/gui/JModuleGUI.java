@@ -327,4 +327,8 @@ public class JModuleGUI extends JFrame {
     public JLabel getStatusLabel() {
         return statusLabel;
     }
+
+    public JTextField getJavaReleaseVersionTextField() {
+        return javaReleaseVersionTextField;
+    }
 }
