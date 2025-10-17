@@ -31,6 +31,7 @@ public class JModuleGUI extends JFrame {
     private JList syntheticModuleJList;
     private JButton submitPomButton;
     private JTextArea finalResultTextarea;
+    private JLabel statusLabel;
     private JModuleObserver observer;
 
     public JModuleGUI(JModuleObserver observer) {
@@ -137,10 +138,10 @@ public class JModuleGUI extends JFrame {
 
         JMenuItem openItem = new JMenuItem("About");
         openItem.addActionListener(e -> {
-           SwingUtilities.invokeLater(() -> {
-               JOptionPane.showMessageDialog(null, "JModules v.1.0.0, by Andrei Dodu");
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "JModules v.1.0.0, by Andrei Dodu");
 
-           });
+            });
         });
         JMenuItem exitItem = new JMenuItem("Exit");
 
@@ -217,7 +218,7 @@ public class JModuleGUI extends JFrame {
         final JScrollPane scrollPane1 = new JScrollPane();
         mainPanel.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(6, 4, new Insets(20, 20, 20, 20), -1, -1));
+        panel1.setLayout(new GridLayoutManager(7, 4, new Insets(20, 20, 20, 20), -1, -1));
         panel1.setMaximumSize(new Dimension(-1, -1));
         panel1.setMinimumSize(new Dimension(-1, -1));
         scrollPane1.setViewportView(panel1);
@@ -292,6 +293,9 @@ public class JModuleGUI extends JFrame {
         finalResultTextarea = new JTextArea();
         finalResultTextarea.setLineWrap(true);
         scrollPane5.setViewportView(finalResultTextarea);
+        statusLabel = new JLabel();
+        statusLabel.setText("Wating for user action");
+        panel1.add(statusLabel, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         progressBar = new JProgressBar();
         mainPanel.add(progressBar, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
@@ -317,5 +321,9 @@ public class JModuleGUI extends JFrame {
 
     public JButton getSubmitPomButton() {
         return submitPomButton;
+    }
+
+    public JLabel getStatusLabel() {
+        return statusLabel;
     }
 }

@@ -88,7 +88,10 @@ public class JModulesController implements JModuleObserver {
         mainExecutor.submit(() -> {
             try {
                 List<String> jarList = engine.apply(uiRecord.absolutePath());
-                SwingUtilities.invokeLater(() -> gui.rebuildJarJList(jarList));
+                SwingUtilities.invokeLater(() -> {
+                    gui.rebuildJarJList(jarList);
+                    gui.getStatusLabel().setText("Processing jar files. Please wait...");
+                });
                 processOnMultipleThreads(uiRecord.javaVersion(), this.status.getJarList());
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -124,8 +127,9 @@ public class JModulesController implements JModuleObserver {
             throw new RuntimeException(e);
         } finally {
             SwingUtilities.invokeLater(() -> enableButtons(true));
-        }
+            gui.getStatusLabel().setText("Waiting for user input");
 
+        }
         SwingUtilities.invokeLater(() -> {
             gui.setFinalResult("jpackage --add-modules " + new HashSet<>(status.getFullModuleSet()).stream().sorted().collect(Collectors.joining(",")));
             gui.showDoneMessage();
@@ -181,7 +185,10 @@ public class JModulesController implements JModuleObserver {
     public void processPomJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
-        SwingUtilities.invokeLater(() -> enableButtons(false));
+        SwingUtilities.invokeLater(() -> {
+            enableButtons(false);
+            gui.getStatusLabel().setText("Loading jar files. Please wait...");
+        });
         showPleaseWaitWarningMessage();
         processJars(build, this::loadPomJars);
     }
@@ -196,7 +203,10 @@ public class JModulesController implements JModuleObserver {
     public void processDirectoryJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
-        SwingUtilities.invokeLater(() -> enableButtons(false));
+        SwingUtilities.invokeLater(() -> {
+            enableButtons(false);
+            gui.getStatusLabel().setText("Loading jar files. Please wait...");
+        });
         processJars(build, this::loadDirectory);
     }
 
@@ -204,7 +214,10 @@ public class JModulesController implements JModuleObserver {
     public void processFileJar(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
-        SwingUtilities.invokeLater(() -> enableButtons(false));
+        SwingUtilities.invokeLater(() -> {
+            enableButtons(false);
+            gui.getStatusLabel().setText("Loading jar files. Please wait...");
+        });
         processJars(build, this::loadFileName);
     }
 
