@@ -23,8 +23,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class JModulesController implements JModuleObserver {
-    private final static Logger LOGGER = LoggerFactory.getLogger(JModulesController.class);
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final static Logger log = LoggerFactory.getLogger(JModulesController.class);
+    private final ExecutorService mainExecutor = Executors.newSingleThreadExecutor();
     private final ExecutorService multithreadedExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private MainStatus status;
@@ -79,19 +79,19 @@ public class JModulesController implements JModuleObserver {
             }
         }
 
-        LOGGER.debug("{}", fileNames);
+        log.debug("{}", fileNames);
         return fileNames.stream().distinct().sorted().collect(Collectors.toList());
     }
 
     @Override
     public void processJars(UiRecord uiRecord, Function<String, List<String>> engine) {
-        executor.submit(() -> {
+        mainExecutor.submit(() -> {
             try {
                 List<String> jarList = engine.apply(uiRecord.absolutePath());
                 SwingUtilities.invokeLater(() -> gui.rebuildJarJList(jarList));
                 processOnMultipleThreads(uiRecord.javaVersion(), this.status.getJarList());
             } catch (Exception e) {
-                LOGGER.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
                 throw new RuntimeException(e);
             }
         });
@@ -120,7 +120,7 @@ public class JModulesController implements JModuleObserver {
         try {
             multithreadedExecutor.invokeAll(callables);
         } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         } finally {
             SwingUtilities.invokeLater(() -> enableButtons(true));
@@ -140,7 +140,7 @@ public class JModulesController implements JModuleObserver {
 
     private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService) {
         Set<String> fullModuleInfo = commandExecutorService.executeJDepsCommand(javaVersion, item);
-        LOGGER.debug("{}", fullModuleInfo);
+        log.debug("{}", fullModuleInfo);
         status.addAllFullModuleInfo(fullModuleInfo);
         status.addModule(parseModules(fullModuleInfo));
 
@@ -154,7 +154,7 @@ public class JModulesController implements JModuleObserver {
 
     @Override
     public Set<String> parseModules(Set<String> modules) {
-        LOGGER.debug("{}", modules);
+        log.debug("{}", modules);
         return modules.stream().map(item -> item.split("->")[1].trim()).collect(Collectors.toSet());
     }
 
@@ -171,7 +171,7 @@ public class JModulesController implements JModuleObserver {
             String directory = commandExecutorService.executeMavenCopyLibraries(absolutePath);
             return loadDirectoryCommon(directory);
         } catch (Exception e) {
-            LOGGER.error("{}", e.getMessage());
+            log.error("{}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -196,7 +196,7 @@ public class JModulesController implements JModuleObserver {
     public void processDirectoryJars(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
-        showPleaseWaitWarningMessage();
+        SwingUtilities.invokeLater(() -> enableButtons(false));
         processJars(build, this::loadDirectory);
     }
 
@@ -204,7 +204,7 @@ public class JModulesController implements JModuleObserver {
     public void processFileJar(UiRecord build) {
         ValidationUtil.validateJavaVersion(build.javaVersion());
         status.clearAllData();
-        showPleaseWaitWarningMessage();
+        SwingUtilities.invokeLater(() -> enableButtons(false));
         processJars(build, this::loadFileName);
     }
 
@@ -212,10 +212,10 @@ public class JModulesController implements JModuleObserver {
     public void shutdown() {
         try {
             multithreadedExecutor.shutdownNow();
-            executor.shutdownNow();
-            LOGGER.debug("shutdown completed");
+            mainExecutor.shutdownNow();
+            log.debug("shutdown completed");
         } catch (Exception e) {
-            LOGGER.error("{}", e);
+            log.error("{}", e);
         }
     }
 
