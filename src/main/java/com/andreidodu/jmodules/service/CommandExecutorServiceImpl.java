@@ -12,6 +12,7 @@ public class CommandExecutorServiceImpl {
     public static final String JDEPS_COMMAND = "$SNAP/usr/lib/jvm/java-21-openjdk-amd64/bin/jdeps";
     public static final String JDEPS_COMMAND_MULTIRELEASE = "--multi-release";
     public static final String JDEPTS_COMMAND_OPTION = "-s";
+
     public static final String MVN_COMMAND = "$SNAP/usr/share/maven/bin/mvn";
 
     public Set<String> executeJDepsCommand(String javaVersion, String jar) {
