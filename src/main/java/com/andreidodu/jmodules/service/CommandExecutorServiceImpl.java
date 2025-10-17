@@ -6,21 +6,53 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class CommandExecutorServiceImpl {
-    public static final String JDEPS_COMMAND = "$SNAP/usr/lib/jvm/java-21-openjdk-amd64/bin/jdeps";
+    public static final String LINUX_JDEPS_COMMAND = "/usr/lib/jvm/java-21-openjdk-amd64/bin/jdeps";
+    public static final String WINDOWS_JDEPS_COMMAND = "jdeps";
+
     public static final String JDEPS_COMMAND_MULTIRELEASE = "--multi-release";
     public static final String JDEPTS_COMMAND_OPTION = "-s";
 
-    public static final String MVN_COMMAND = "$SNAP/usr/share/maven/bin/mvn";
+    public static final String LINUX_MVN_COMMAND = "/usr/share/maven/bin/mvn";
+    public static final String WINDOWS_MVN_COMMAND = "mvn";
+
+    private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
+
+    public static boolean isWindows() {
+        return OS_NAME.contains("win");
+    }
+
+    public static boolean isLinux() {
+        return OS_NAME.contains("nix") || OS_NAME.contains("nux") || OS_NAME.contains("aix");
+    }
+
+    public static boolean isMac() {
+        return OS_NAME.contains("mac");
+    }
 
     public Set<String> executeJDepsCommand(String javaVersion, String jar) {
-        return new HashSet<>(execute(JDEPS_COMMAND, JDEPS_COMMAND_MULTIRELEASE, javaVersion, JDEPTS_COMMAND_OPTION, jar));
+        return new HashSet<>(execute(getJDepsExecutable(), JDEPS_COMMAND_MULTIRELEASE, javaVersion, JDEPTS_COMMAND_OPTION, jar));
+    }
+
+    private String getJDepsExecutable() {
+        String jdepsCommand = "jdeps";
+        if (isLinux() || isMac()) {
+            jdepsCommand = getBinPath(LINUX_JDEPS_COMMAND);
+        } else if (isWindows()) {
+            jdepsCommand = WINDOWS_JDEPS_COMMAND;
+        }
+        return jdepsCommand;
     }
 
     private List<String> execute(final String... args) {
         try {
+
+
             System.out.println("Executing command: " + String.join(" ", args));
             ProcessBuilder builder = new ProcessBuilder(args);
             Process process = builder.start();
@@ -53,6 +85,23 @@ public class CommandExecutorServiceImpl {
         return List.of();
     }
 
+    private String getBinPath(String binPath) {
+        if (System.getenv("SNAP") != null) {
+            return String.format("%s/%s", System.getenv("SNAP"), binPath);
+        }
+        return binPath;
+    }
+
+    private String getMVNExecutable() {
+        String jdepsCommand = "mvn";
+        if (isLinux() || isMac()) {
+            jdepsCommand = getBinPath(LINUX_MVN_COMMAND);
+        } else if (isWindows()) {
+            jdepsCommand = WINDOWS_MVN_COMMAND;
+        }
+        return jdepsCommand;
+    }
+
     public String executeMavenCopyLibraries(String absolutePath) throws IOException {
         String exportPath = System.getProperty("user.home") + File.separator + "com.andreidodu.jmodules" + File.separator + "lib";
         Files.createDirectories(Path.of(exportPath));
@@ -62,7 +111,7 @@ public class CommandExecutorServiceImpl {
                 file.delete();
             }
         }
-        this.execute(MVN_COMMAND, "dependency:copy-dependencies", "-f", absolutePath, "-DoutputDirectory=" + exportPath);
+        this.execute(getMVNExecutable(), "dependency:copy-dependencies", "-f", absolutePath, "-DoutputDirectory=" + exportPath);
         return exportPath;
     }
 }
