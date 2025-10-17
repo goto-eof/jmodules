@@ -141,6 +141,7 @@ public class JModulesController implements JModuleObserver {
         gui.getSubmitFileButton().setEnabled(enable);
         gui.getSubmitDirectoryButton().setEnabled(enable);
         gui.getJavaReleaseVersionTextField().setEnabled(enable);
+        gui.pack();
     }
 
     private void processItem(String javaVersion, String item, CommandExecutorServiceImpl commandExecutorService) {
