@@ -99,8 +99,9 @@ public class JModulesController implements JModuleObserver {
 
 
     private void process(String javaVersion, List<String> jarFilenameList) {
-        enableButtons(false);
 
+
+        SwingUtilities.invokeLater(() -> enableButtons(false));
         SwingUtilities.invokeLater(() -> gui.setProgressBarMax(jarFilenameList.size()));
         SwingUtilities.invokeLater(() -> gui.setProgressBarCurrent(0));
 
@@ -123,7 +124,7 @@ public class JModulesController implements JModuleObserver {
             LOGGER.error(e.getMessage(), e);
             throw new RuntimeException(e);
         } finally {
-            enableButtons(true);
+            SwingUtilities.invokeLater(() -> enableButtons(false));
         }
 
         SwingUtilities.invokeLater(() -> {
