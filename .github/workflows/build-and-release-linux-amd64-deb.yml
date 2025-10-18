@@ -62,7 +62,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y fakeroot dpkg-dev
-
+      - name: Create Full JRE Image with jlink
+        id: jlink
+        run: |
+          RUNTIME_IMAGE_PATH="full-jre"
+          "$JAVA_HOME/bin/jlink" \
+            --module-path "$JAVA_HOME/jmods" \
+            --add-modules ALL-MODULE-PATH \
+            --output "$RUNTIME_IMAGE_PATH"
+          echo "RUNTIME_PATH=$RUNTIME_IMAGE_PATH" >> $GITHUB_ENV
       - name: Create DEB package with jpackage
         run: |
           INPUT_PATH="downloaded-files/target"
@@ -84,7 +92,7 @@ jobs:
             --type deb \
             --linux-shortcut \
             --java-options "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true" \
-            --runtime-image "$JAVA_HOME" \
+            --runtime-image "${{ env.RUNTIME_PATH }}"
             --verbose
 
       - name: Zip DEB file
