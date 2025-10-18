@@ -1,5 +1,5 @@
   name: jmodules
-  version: '1.0.11'
+  version: '1.0.12'
   summary: A Java distribution bundle optimization helper.
   description: |
     A Java package optimization that helps to reduce the size of your distributed bundles.

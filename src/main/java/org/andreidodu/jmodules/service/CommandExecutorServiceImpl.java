@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CommandExecutorServiceImpl {
+    public static final String MACOS_JDEPS_COMMAND = "jdeps";
     public static final String LINUX_JDEPS_COMMAND = "/usr/lib/jvm/java-21-openjdk-amd64/bin/jdeps";
     public static final String WINDOWS_JDEPS_COMMAND = "jdeps";
 
@@ -21,6 +22,7 @@ public class CommandExecutorServiceImpl {
     public static final String JDEPTS_COMMAND_OPTION = "-s";
 
     public static final String LINUX_MVN_COMMAND = "/usr/share/maven/bin/mvn";
+    public static final String MACOS_MVN_COMMAND = "mvn";
     public static final String WINDOWS_MVN_COMMAND = "mvn";
 
     private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
@@ -43,10 +45,12 @@ public class CommandExecutorServiceImpl {
 
     private String getJDepsExecutable() {
         String jdepsCommand = "jdeps";
-        if (isLinux() || isMac()) {
+        if (isLinux()) {
             jdepsCommand = getBinPathIfIsSnapOrDefault(LINUX_JDEPS_COMMAND);
         } else if (isWindows()) {
             jdepsCommand = WINDOWS_JDEPS_COMMAND;
+        } else if (isMac()) {
+            jdepsCommand = MACOS_JDEPS_COMMAND;
         }
         return jdepsCommand;
     }
@@ -96,10 +100,12 @@ public class CommandExecutorServiceImpl {
 
     private String getMVNExecutable() {
         String jdepsCommand = "mvn";
-        if (isLinux() || isMac()) {
+        if (isLinux()) {
             jdepsCommand = getBinPathIfIsSnapOrDefault(LINUX_MVN_COMMAND);
         } else if (isWindows()) {
             jdepsCommand = WINDOWS_MVN_COMMAND;
+        } else if (isMac()) {
+            jdepsCommand = MACOS_MVN_COMMAND;
         }
         return jdepsCommand;
     }
