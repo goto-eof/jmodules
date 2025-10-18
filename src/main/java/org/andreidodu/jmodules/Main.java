@@ -1,6 +1,6 @@
-package com.andreidodu.jmodules;
+package org.andreidodu.jmodules;
 
-import com.andreidodu.jmodules.controller.JModulesController;
+import org.andreidodu.jmodules.controller.JModulesController;
 
 public class Main {
 

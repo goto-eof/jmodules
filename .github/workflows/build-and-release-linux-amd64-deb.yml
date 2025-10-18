@@ -84,7 +84,7 @@ jobs:
             --type deb \
             --linux-shortcut \
             --java-options "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true" \
-            --add-modules java.base,java.desktop \
+            --runtime-image "$JAVA_HOME" \
             --verbose
 
       - name: Zip DEB file

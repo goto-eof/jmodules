@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.andreidodu</groupId>
     <artifactId>jreps</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>JModules</name>
     <url>http://maven.apache.org</url>
 
@@ -71,7 +71,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.andreidodu.jmodules.Main</mainClass>
+                                    <mainClass>org.andreidodu.jmodules.Main</mainClass>
                                 </manifest>
                                 <manifestEntries>
                                     <Multi-Release>true</Multi-Release>

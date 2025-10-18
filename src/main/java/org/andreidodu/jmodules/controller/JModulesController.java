@@ -1,10 +1,10 @@
-package com.andreidodu.jmodules.controller;
+package org.andreidodu.jmodules.controller;
 
-import com.andreidodu.jmodules.gui.JModuleGUI;
-import com.andreidodu.jmodules.helper.ValidationUtil;
-import com.andreidodu.jmodules.record.UiRecord;
-import com.andreidodu.jmodules.service.CommandExecutorServiceImpl;
-import com.andreidodu.jmodules.status.MainStatus;
+import org.andreidodu.jmodules.gui.JModuleGUI;
+import org.andreidodu.jmodules.helper.ValidationUtil;
+import org.andreidodu.jmodules.record.UiRecord;
+import org.andreidodu.jmodules.service.CommandExecutorServiceImpl;
+import org.andreidodu.jmodules.status.MainStatus;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

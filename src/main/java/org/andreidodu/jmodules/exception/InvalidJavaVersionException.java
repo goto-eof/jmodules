@@ -1,4 +1,4 @@
-package com.andreidodu.jmodules.exception;
+package org.andreidodu.jmodules.exception;
 
 public class InvalidJavaVersionException extends RuntimeException {
 

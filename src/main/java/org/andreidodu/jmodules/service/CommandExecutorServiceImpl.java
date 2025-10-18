@@ -1,4 +1,4 @@
-package com.andreidodu.jmodules.service;
+package org.andreidodu.jmodules.service;
 
 import org.apache.commons.io.FileUtils;
 
@@ -105,7 +105,7 @@ public class CommandExecutorServiceImpl {
     }
 
     public String executeMavenCopyLibraries(String absolutePath) throws IOException {
-        String workingDirectory = System.getProperty("user.home") + File.separator + "com.andreidodu.jmodules" + File.separator;
+        String workingDirectory = System.getProperty("user.home") + File.separator + "org.andreidodu.jmodules" + File.separator;
         String exportPath = workingDirectory + "lib";
         String downloadPath = workingDirectory + "download";
 

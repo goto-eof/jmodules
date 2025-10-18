@@ -1,13 +1,13 @@
-package com.andreidodu.jmodules.gui;
+package org.andreidodu.jmodules.gui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import com.andreidodu.jmodules.controller.JModuleObserver;
-import com.andreidodu.jmodules.helper.GuiHelper;
+import org.andreidodu.jmodules.controller.JModuleObserver;
+import org.andreidodu.jmodules.helper.GuiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.andreidodu.jmodules.record.UiRecord;
+import org.andreidodu.jmodules.record.UiRecord;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -37,7 +37,7 @@ public class JModuleGUI extends JFrame {
     public JModuleGUI(JModuleObserver observer) {
         this.observer = observer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("JModules 1.0.8");
+        setTitle("JModules 1.0.9");
         setContentPane(mainPanel);
 
         addMenu();
@@ -139,7 +139,7 @@ public class JModuleGUI extends JFrame {
         JMenuItem openItem = new JMenuItem("About");
         openItem.addActionListener(e -> {
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "JModules v.1.0.8, by Andrei Dodu");
+                JOptionPane.showMessageDialog(null, "JModules v.1.0.9, by Andrei Dodu");
 
             });
         });
