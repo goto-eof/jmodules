@@ -72,7 +72,7 @@ jobs:
             --vendor "Andrei Dodu" \
             --app-version "$RELEASE_TAG" \
             --main-jar "$MAIN_JAR" \
-            --main-class org.andreidodu.nocconvert.Main \
+            --main-class org.andreidodu.jmodules.Main \
             --icon "$ICON_PATH" \
             --type pkg \
             --java-options "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true" \
