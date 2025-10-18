@@ -92,7 +92,7 @@ jobs:
             --type deb \
             --linux-shortcut \
             --java-options "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true" \
-            --runtime-image "${{ env.RUNTIME_PATH }}"
+            --runtime-image "${{ env.RUNTIME_PATH }}" \
             --verbose
 
       - name: Zip DEB file
