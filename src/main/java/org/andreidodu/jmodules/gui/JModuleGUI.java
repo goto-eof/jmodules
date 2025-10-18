@@ -37,7 +37,7 @@ public class JModuleGUI extends JFrame {
     public JModuleGUI(JModuleObserver observer) {
         this.observer = observer;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("JModules 1.0.12");
+        setTitle("JModules 1.0.13");
         setContentPane(mainPanel);
 
         addMenu();
@@ -139,7 +139,7 @@ public class JModuleGUI extends JFrame {
         JMenuItem openItem = new JMenuItem("About");
         openItem.addActionListener(e -> {
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(null, "JModules v.1.0.12, by Andrei Dodu");
+                JOptionPane.showMessageDialog(null, "JModules v.1.0.13, by Andrei Dodu");
 
             });
         });
