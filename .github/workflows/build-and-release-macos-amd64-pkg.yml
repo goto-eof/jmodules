@@ -68,7 +68,7 @@ jobs:
           jpackage \
             --input "$INPUT_PATH" \
             --dest "$OUTPUT_PATH" \
-            --name "NoCloud Bulk Image Converter" \
+            --name "JModules" \
             --vendor "Andrei Dodu" \
             --app-version "$RELEASE_TAG" \
             --main-jar "$MAIN_JAR" \
@@ -81,7 +81,7 @@ jobs:
 
       - name: Zip PKG file
         run: |
-          PKG_FILE="executable/NoCloud Bulk Image Converter-${RELEASE_TAG}.pkg"
+          PKG_FILE="executable/JModules-${RELEASE_TAG}.pkg"
           ZIP_NAME="${{ github.event.repository.name }}-MacOS-${{ github.ref_name }}-amd64-Installer.zip"
           zip -j "$ZIP_NAME" "$PKG_FILE"
 
